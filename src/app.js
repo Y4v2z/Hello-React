@@ -109,7 +109,7 @@
 //     if (prd.description) {
 //         return <p>{prd.description}</p>
 
-//     } 
+//     }
 // };
 // var template =
 //     <div>
@@ -143,7 +143,7 @@
 // //     if (prd.description) {
 // //         return <p>{prd.description}</p>
 
-// //     } 
+// //     }
 // // };
 // var template =
 //     <div>
@@ -165,7 +165,7 @@
 // root.render(template);
 // hiç fonksiyona gerek duyulmadan && opetarörü if yerine geçer ve anlamı şöyledir:eğer product. description
 // p etiketinin içini yaz yoksa yazma.
-// aynı husus format price fonksiyonu için de geçereli. product price varsa ve price 0 dan büyükse formatPrice 
+// aynı husus format price fonksiyonu için de geçereli. product price varsa ve price 0 dan büyükse formatPrice
 // fonksiyonunu çalıştır demek.
 
 // Koşullu durumlarda "Turnary" operatörünü kullanma.
@@ -182,7 +182,7 @@
 // //     if (prd.description) {
 // //         return <p>{prd.description}</p>
 
-// //     } 
+// //     }
 // // };
 // var template =
 //     <div>
@@ -391,6 +391,74 @@
 
 
 // FORM
+// var root = ReactDOM.createRoot(document.getElementById("root"));
+// var products = [
+//     {
+//         name: "Iphone 15",
+//         price: 50000
+
+//     },
+//     {
+//         name: "Iphone 16",
+//         price: 60000
+
+//     },
+//     {
+//         name: "Iphone 17",
+//         price: 70000
+
+//     }
+// ]
+// var selectedProducts = [];
+// var selectProduct = (event, p_name) => {
+//     console.log(event, p_name);
+//     if (!selectedProducts.includes(p_name)) {
+//         selectedProducts.push(p_name);
+//     }
+//     renderApp();
+// }
+// function saveProduct(event) {
+//     event.preventDefault();
+//     var p_name = event.target.elements.p_name.value;
+//     var p_price = event.target.elements.p_price.value;
+//     var newProduct = {
+//         name: p_name,
+//         price: p_price
+//     };
+//     products.push(newProduct);
+//     event.target.elements.p_name.value = "";
+//     event.target.elements.p_price.value = "";
+//     renderApp();
+// }
+// function renderApp() {
+//     var template =
+//         <div>
+//             <h1 id="header">Ürün Listesi</h1>
+//             <h3>Seçilen Ürün Sayısı: {selectedProducts.length}</h3>
+//             <form onSubmit={saveProduct}>
+//                 <input type="text" name="p_name" id="p_name" />
+//                 <input type="text" name="p_price" id="p_price" />
+//                 <button type="submit">Save Product</button>
+//             </form>
+//             {
+//                 products.map((product, index) => (
+//                     <div className="product-details" key={index}>
+//                         {<h2>{product.name}</h2>}
+//                         {product.price}
+//                         <button type="button" id={index} onClick={(event) => { selectProduct(event, product.name) }}>Ekle</button>
+//                     </div>
+//                 ))
+//             }
+//         </div>;
+//     root.render(template);
+// };
+// renderApp();
+
+
+
+// Day 2 Finished **********************************************
+// Day 3 Started ***********************************************
+// Component js ile öğrenilen bilgilerin birleştirilmesi
 var root = ReactDOM.createRoot(document.getElementById("root"));
 var products = [
     {
@@ -406,6 +474,12 @@ var products = [
     {
         name: "Iphone 17",
         price: 70000
+
+    }
+    ,
+    {
+        name: "Iphone 1",
+        price: 80000
 
     }
 ]
@@ -430,33 +504,60 @@ function saveProduct(event) {
     event.target.elements.p_price.value = "";
     renderApp();
 }
-
-function renderApp() {
-    var template =
-        <div>
-            <h1 id="header">Ürün Listesi</h1>
-            <h3>Seçilen Ürün Sayısı: {selectedProducts.length}</h3>
+class Header extends React.Component {
+    render() {
+        return (
+            <div>
+                <h1 id="header">Ürün Listesi</h1>
+                <h3>Seçilen Ürün Sayısı: {selectedProducts.length}</h3>
+            </div>
+        )
+    }
+};
+class NewProduct extends React.Component {
+    render() {
+        return (
             <form onSubmit={saveProduct}>
                 <input type="text" name="p_name" id="p_name" />
                 <input type="text" name="p_price" id="p_price" />
                 <button type="submit">Save Product</button>
             </form>
-            {
-                products.map((product, index) => (
-                    <div className="product-details" key={index}>
-                        {<h2>{product.name}</h2>}
-                        {product.price}
-                        <button type="button" id={index} onClick={(event) => { selectProduct(event, product.name) }}>Ekle</button>
-                    </div>
-                ))
-            }
-        </div>;
-    root.render(template);
-};
-renderApp();
+        )
 
+    }
+}
+class ProductList extends React.Component {
+    render() {
+        return (
+            this.props.products.map((product, index) => (
+                <Product product={product} key={index} />
+            ))
+        )
+    }
+}
+class Product extends React.Component {
+    render() {
+        return (
+            <div className="product-details" >
+                {<h2>{this.props.product.name}</h2>}
+                {this.props.product.price}
+                <button type="button" onClick={(event) => { selectProduct(event, this.props.product.name) }}>Ekle</button>
+            </div>
 
-
-// Day 2 Finished **********************************************
-// Day 3 Started ***********************************************
+        )
+    }
+}
+class App extends React.Component {
+    render() {
+        return (
+            <div>
+                <Header />
+                <NewProduct />
+                <ProductList products={products} />
+            </div>
+        )
+    }
+}
+root.render(<App />);
+// Day 3 Finished ****************************
 

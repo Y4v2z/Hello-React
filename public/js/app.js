@@ -1,454 +1,317 @@
 "use strict";
 
-// 1)basit olarak sayfadaki dinamik kısımları doldurma
-// var p_name = "Iphone 15";
-// var p_price = "45.000";
-// var template =
-//     <div>
-//         <h1 id="header">Ürün Listesi</h1>
-//         <div class="product-details">
-//             <h2>{p_name}</h2>
-//             <p>{p_price} TL</p>
-//             <ul>
-//                 <li>Lorem, ipsum.</li>
-//                 <li>Lorem, ipsum.</li>
-//                 <li>Lorem, ipsum.</li>
-//             </ul>
-//         </div>
-//     </div>;
-// var p_name = "Iphone 15";
-// var p_price = "45.000";
-// root.render(template);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+// Components
+// Componentler 2 şekilde tanımlanır. Function Component, Class Component
 
-// 2)object kullanarak sayfadaki dinamik kısımları doldurmak
-// var product = {
-//     name: "Iphone 14",
-//     price: 45.000
-// }
-// var template =
-//     <div>
-//         <h1 id="header">Ürün Listesi</h1>
-//         <div class="product-details">
-//             <h2>{product.name}</h2>
-//             <p>{product.price} TL</p>
-//             <ul>
-//                 <li>Lorem, ipsum.</li>
-//                 <li>Lorem, ipsum.</li>
-//                 <li>Lorem, ipsum.</li>
-//             </ul>
-//         </div>
-//     </div>;
-// root.render(template);
-// fonksiyonu dahil ederek dinamik kısımları doldurmak.
-// var product = {
-//     name: "Iphone 14",
-//     price: 50.000
-// }
-// function formatPrice(prd) {
-//     return prd.price + " TL"
-// }
-// var template =
-//     <div>
-//         <h1 id="header">Ürün Listesi</h1>
-//         <div id="product-details">
-//             <h2>{product.name}</h2>
-//             <p>{formatPrice(product)}</p>
-//             <ul>
-//                 <li>Lorem, ipsum.</li>
-//                 <li>Lorem, ipsum.</li>
-//                 <li>Lorem, ipsum.</li>
-//             </ul>
-//         </div>
-//     </div>;
+// 1)Function Component
 // var root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(template);
-// Day 1 Finished **********************************************
-// Day 2 Started ***********************************************
-// Koşullu duurmlar
-// var product = {
-//     name: "Iphone 14",
-//     price: 50.000,
-//     description:"en yeni ürün"
-// }
-// function formatPrice(prd) {
-//     return prd.price + " TL"
-// };
-// function printDescription(prd) {
-//     if (prd.description) {
-//         return prd.description;
-//     } else
-//         return "ürün bulunamadi"
-// };
-// var template =
-//     <div>
-//         <h1 id="header">Ürün Listesi</h1>
-//         <div id="product-details">
-//             <h2>{product.name}</h2>
-//             <p>{formatPrice(product)}</p>
-//             <p>{printDescription(product)}</p>
-//             <ul>
-//                 <li>Lorem, ipsum.</li>
-//                 <li>Lorem, ipsum.</li>
-//                 <li>Lorem, ipsum.</li>
-//             </ul>
-//         </div>
-//     </div>;
-// var root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(template);
-// bu durumda şayet description product objesinin description u varsa onu yazar. yoksa else blogundaki açıklamayı yazar.
-//else bloğunda açıklama yoksa herhangi bir açıklama olmaz.Ancak sayfada boş bir p etiketi olduğu görülür.Aşağıdaki gibi yazılırsa;
-
-// var product = {
-//     name: "Iphone 14",
-//     price: 50.000,
-//     description: "en yeni ürün"
-// }
-// function formatPrice(prd) {
-//     return prd.price + " TL"
-// };
-// function printDescription(prd) {
-//     if (prd.description) {
-//         return <p>{prd.description}</p>
-
-//     } 
-// };
-// var template =
-//     <div>
-//         <h1 id="header">Ürün Listesi</h1>
-//         <div id="product-details">
-//             <h2>{product.name}</h2>
-//             <p>{formatPrice(product)}</p>
-//             {printDescription(product)}
-//             <ul>
-//                 <li>Lorem, ipsum.</li>
-//                 <li>Lorem, ipsum.</li>
-//                 <li>Lorem, ipsum.</li>
-//             </ul>
-//         </div>
-//     </div>;
-// var root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(template);
-// product objesinin description bölümü yoksa sayfada birşey yazmaz boş ir p etiketi de görünmez. ancak varsa
-// yukarıda olduğu gibi return içinde de p etiketi açılabilir.
-
-// var product = {
-//     name: "Iphone 14",
-//     price: 50000,
-//     description: "en yeni ürün"
-// }
-// function formatPrice(product) {
-//     return <p>{product.price} TL</p>
-// };
-// // function printDescription(prd) {
-// //     if (prd.description) {
-// //         return <p>{prd.description}</p>
-
-// //     } 
-// // };
-// var template =
-//     <div>
-//         <h1 id="header">Ürün Listesi</h1>
-//         <div id="product-details">
-//             <h2>{product.name}</h2>
-//             {/* <p>{formatPrice(product)}</p> */}
-//             {(product.price && product.price > 0) && formatPrice(product)}
-//             {/* {printDescription(product)} */}
-//             {product.description && <p>{product.description}</p>}
-//             <ul>
-//                 <li>Lorem, ipsum.</li>
-//                 <li>Lorem, ipsum.</li>
-//                 <li>Lorem, ipsum.</li>
-//             </ul>
-//         </div>
-//     </div>;
-// var root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(template);
-// hiç fonksiyona gerek duyulmadan && opetarörü if yerine geçer ve anlamı şöyledir:eğer product. description
-// p etiketinin içini yaz yoksa yazma.
-// aynı husus format price fonksiyonu için de geçereli. product price varsa ve price 0 dan büyükse formatPrice 
-// fonksiyonunu çalıştır demek.
-
-// Koşullu durumlarda "Turnary" operatörünü kullanma.
-// var product = {
-//     name: "Iphone 14",
-//     price: 50000,
-//     description: "en yeni ürün",
-//     color: ["silver", "red", "white"]
-// }
-// function formatPrice(product) {
-//     return <p>{product.price} TL</p>
-// };
-// // function printDescription(prd) {
-// //     if (prd.description) {
-// //         return <p>{prd.description}</p>
-
-// //     } 
-// // };
-// var template =
-//     <div>
-//         <h1 id="header">Ürün Listesi</h1>
-//         <div id="product-details">
-//             {/* {product.name ? <h2>{product.name}</h2> : <p>ürün ismi girilmemiş</p>} */}
-//             {(product.name && product.name.length > 3) ? <h2>{product.name}</h2> : <p>ürün ismi girilmemiş</p>}
-//             {(product.price && product.price > 0) && formatPrice(product)}
-//             {product.description && <p>{product.description}</p>}
-//             {/* {product.color.length > 0 ? "ürün rengi mevcut" : ""} */}
-//             {product.color.length > 0 ? <p>ürün rengi mevcut</p> : ""}
-//             <ul>
-//                 <li>Lorem, ipsum.</li>
-//                 <li>Lorem, ipsum.</li>
-//                 <li>Lorem, ipsum.</li>
-//             </ul>
-//         </div>
-//     </div>;
-// var root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(template);
-
-// Diziler ile çalışma Map metodu. (renkleri tk tek eklemek yerine map metdu ile düzenlemek)
-// var product = {
-//     name: "Iphone 14",
-//     price: 50000,
-//     description: "en yeni ürün",
-//     colors: ["silver", "red", "white", "yellow"]
-// }
-// function formatPrice(product) {
-//     return <p>{product.price} TL</p>
-// };
-// var template =
-//     <div>
-//         <h1 id="header">Ürün Listesi</h1>
-//         <div id="product-details">
-//             {/* {product.name ? <h2>{product.name}</h2> : <p>ürün ismi girilmemiş</p>} */}
-//             {(product.price && product.price > 0) && formatPrice(product)}
-//             {product.description && <p>{product.description}</p>}
-//             {/* {product.color.length > 0 ? "ürün rengi mevcut" : ""} */}
-//             {product.colors.length > 0 ? <p>ürün rengi mevcut</p> : ""}
-//             <ul>{
-//                 product.colors.map((color, index) => <li key={index}>{color}</li>)
-//             }
-//             </ul>
-//         </div>
-//     </div>;
-// var root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(template);
-
-// bir değil bir kaç ürün yani Products lar üzerinde çalışma
-// var products = [
-//     {
-//         id: 1,
-//         name: "Iphone 15",
-//         price: 50000,
-//         description: "en yeni ürün",
-//         colors: ["silver", "red", "white", "yellow"]
-
-//     },
-//     {
-//         id: 2,
-//         name: "Iphone 16",
-//         price: 60000,
-//         description: "en yeni ürün",
-//         colors: ["silver", "black", "green"]
-
-//     }
-// ]
-// function formatPrice(product) {
-//     return <p>{product.price} TL</p>
-// };
-// var template =
-//     <div>
-//         <h1 id="header">Ürün Listesi</h1>
-//         {
-//             products.map(product => (
-//                 <div className="product-details" key={product.id}>
-//                     {(product.name && product.name.length > 3) ? <h2>{product.name}</h2> : <p>ürün ismi girilmemiş</p>}
-//                     {(product.price && product.price > 0) && formatPrice(product)}
-//                     {product.description && <p>{product.description}</p>}
-//                     {product.colors.length > 0 ? <p>ürün rengi mevcut</p> : ""}
-//                     <ul>
-//                         {
-//                             product.colors.map((color, index) => <li key={index}>{color}</li>)
-//                         }
-//                     </ul>
-//                 </div>
-//             ))
-//         }
-//     </div>;
-// var root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(template);
-
-// map metodunu çoğul ürün içinde kullaırken, yazdığımız arrow fonksiyonda => dan sonra {} değil normal parantez () kullanıldı.
-// bir üstteki örnekte olduğu gibi map metodu içine bir index parametresi yazılıp key aşağıdaki key içine
-// product.id yerine index de yazılabilir.
-
-// Event, button
-// var products = [
-//     {
-//         name: "Iphone 15",
-//         price: 50000
-
-//     },
-//     {
-//         name: "Iphone 16",
-//         price: 60000
-
-//     },
-//     {
-//         name: "Iphone 17",
-//         price: 70000
-
-//     }
-// ]
-// var addProduct = () => {
-//     console.log("product added");
-// }
-// bu şekilde fonksiyonu dışarıda yazıp aşağıda onClic içine sadece fonksiyon ismini de gönderebiliirz. aşağıdaki gibi de yapılabilir.
-// var template =
-//     <div>
-//         <h1 id="header">Ürün Listesi</h1>
-//         {
-//             products.map((product, index) => (
-//                 <div className="product-details" key={index}>
-//                     {<h2>{product.name}</h2>}
-//                     {product.price}
-//                     <button type="button" id={index} onClick={(event) => { console.log(event.target, product.name); }}>Ekle</button>
-//                 </div>
-//             ))
-//         }
-//     </div>;
-// var root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(template);
-
-// AYNI OLAY Şöyle de yzılabilir
-// var addProduct = (event, p_name) => {
-//     console.log(event, p_name);
-// }
-// var template =
-//     <div>
-//         <h1 id="header">Ürün Listesi</h1>
-//         {
-//             products.map((product, index) => (
-//                 <div className="product-details" key={index}>
-//                     {<h2>{product.name}</h2>}
-//                     {product.price}
-//                     <button type="button" id={index} onClick={(event) => { addProduct(event, product.name) }}>Ekle</button>
-//                 </div>
-//             ))
-//         }
-//     </div>;
-// var root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(template);
-// (event) => { console.log(event.target); }
-
-// Data Binding
-// var root = ReactDOM.createRoot(document.getElementById("root"));
-// var products = [
-//     {
-//         name: "Iphone 15",
-//         price: 50000
-
-//     },
-//     {
-//         name: "Iphone 16",
-//         price: 60000
-
-//     },
-//     {
-//         name: "Iphone 17",
-//         price: 70000
-
-//     }
-// ]
-// var selectedProducts = [];
-// var addProduct = (event, p_name) => {
-//     console.log(event, p_name);
-//     if (!selectedProducts.includes(p_name)) {
-//         selectedProducts.push(p_name);
-//     }
-//     renderApp();
-// }
-// function renderApp() {
-//     var template =
+// function TodoApp() {
+//     return (
 //         <div>
-//             <h1 id="header">Ürün Listesi</h1>
-//             <h3>Seçilen Ürün Sayısı: {selectedProducts.length}</h3>
-//             {
-//                 products.map((product, index) => (
-//                     <div className="product-details" key={index}>
-//                         {<h2>{product.name}</h2>}
-//                         {product.price}
-//                         <button type="button" id={index} onClick={(event) => { addProduct(event, product.name) }}>Ekle</button>
-//                     </div>
-//                 ))
-//             }
-//         </div>;
-//     root.render(template);
+//             <Header />
+//             <Todo />
+//         </div>)
+// }
+// function Header(props) {
+//     return (<h1>TodoApp</h1>);
 // };
-// renderApp();
+// function Todo(props) {
+//     return (
+//         <ul>
+//             <li>Görev 1</li>
+//             <li>Görev 2</li>
+//             <li>Görev 3</li>
+//         </ul>
+//     )
+// };
+// root.render(<TodoApp />);
+// ister aşağıdaki gibi template içinde yazdır fonksiyonu istersende ukarıdaki gibi template yerine
+// TodoApp isimli fonksiyon içinde diğer componentlerini çağır.
 
-// FORM
+// var template = <div>
+//     <Header />
+//     <Todo />
+// </div>;
+// root.render(template);
+
+// 2)ClassComponent
+// var root = ReactDOM.createRoot(document.getElementById("root"));
+// class TodoApp extends React.Component {
+//     render() {
+//         return (
+//             <div>
+//                 <Header />
+//                 <Todo />
+//             </div>)
+//     }
+// }
+// class Header extends React.Component {
+//     render() {
+//         return (<h1>TodoApp</h1>);
+//     }
+// };
+// class Todo extends React.Component {
+//     render() {
+//         return (
+//             <ul>
+//                 <li>Görev 1</li>
+//                 <li>Görev 2</li>
+//                 <li>Görev 3</li>
+//             </ul>
+//         )
+//     };
+// }
+// root.render(<TodoApp />);
+
+// ister aşağıdaki gibi template içinde yazdır istersende ukarıdaki gibi template yerine
+// TodoApp isimli component içinde diğerlerini çağır.
+// var template = <div>
+//     <Header />
+//     <Todo />
+// </div>;
+// root.render(template);
+
+// PARAMETRELERİ (props) function da ve class yapısında nasıl kullanırız.? 
+
+// Fonksiyon kullanımı
+// var root = ReactDOM.createRoot(document.getElementById("root"));
+// function TodoApp() {
+//     return (
+//         <div>
+//             <Header title="Todo uygulaması" description="görev tamamlanmadı" />
+//             <Todo />
+//         </div>)
+// }
+// function Header(props) {
+//     console.log(props);
+//     return (
+//         <div>
+//             <h1>{props.title}</h1>
+//             <p>{props.description}</p>
+//         </div>
+//     );
+// };
+// function Todo(props) {
+//     return (
+//         <ul>
+//             <li>Görev 1</li>
+//             <li>Görev 2</li>
+//             <li>Görev 3</li>
+//         </ul>
+//     )
+// };
+// root.render(<TodoApp />);
+
+// Class Kullanımı
+// var root = ReactDOM.createRoot(document.getElementById("root"));
+// class TodoApp extends React.Component {
+//     render() {
+//         return (
+//             <div>
+//                 <Header title="Todo uygulaması" description="görev tamamlanmadı" />
+//                 <Todo />
+//             </div>)
+//     }
+// }
+// class Header extends React.Component {
+//     render() {
+//         return (
+//             <div>
+//                 <h1>{this.props.title}</h1>
+//                 <p>{this.props.description}</p>
+//             </div>
+//         )
+//     }
+// };
+// class Todo extends React.Component {
+//     render() {
+//         return (
+//             <ul>
+//                 <li>Görev 1</li>
+//                 <li>Görev 2</li>
+//                 <li>Görev 3</li>
+//             </ul>
+//         )
+//     };
+// }
+// root.render(<TodoApp />);
+
+// DATA ile Çalışma
+
+// Fonksiyon kullanımı
+// var root = ReactDOM.createRoot(document.getElementById("root"));
+// function TodoApp() {
+// const data = {
+//     title: "Todo Uygulaması",
+//     description: "Görev tamamlandı",
+//     items: ["Görev 1", "Görev 2", "Görev 3"]
+// }
+//     return (
+//         <div>
+//             <Header title={data.title} description={data.description} />
+//             <TodoList task={data.items} />
+//         </div>)
+// }
+// function Header(props) {
+//     console.log(props);
+//     return (
+//         <div>
+//             <h1>{props.title}</h1>
+//             <p>{props.description}</p>
+//         </div>
+//     );
+// };
+// function TodoList(props) {
+//     return (
+//         <ul>
+//             {
+//                 props.task.map((item, index) => <TodoItem key={index} item={item} />)
+//             }
+
+//         </ul>
+//     )
+// };
+// function TodoItem(props) {
+//     return (
+//         <li >{props.item}</li>
+//     )
+// }
+// root.render(<TodoApp />);
+
+// Class Kullanımı
 var root = ReactDOM.createRoot(document.getElementById("root"));
-var products = [{
-  name: "Iphone 15",
-  price: 50000
-}, {
-  name: "Iphone 16",
-  price: 60000
-}, {
-  name: "Iphone 17",
-  price: 70000
-}];
-var selectedProducts = [];
-var selectProduct = function selectProduct(event, p_name) {
-  console.log(event, p_name);
-  if (!selectedProducts.includes(p_name)) {
-    selectedProducts.push(p_name);
+var TodoApp = /*#__PURE__*/function (_React$Component) {
+  _inherits(TodoApp, _React$Component);
+  var _super = _createSuper(TodoApp);
+  function TodoApp() {
+    _classCallCheck(this, TodoApp);
+    return _super.apply(this, arguments);
   }
-  renderApp();
-};
-function saveProduct(event) {
-  event.preventDefault();
-  var p_name = event.target.elements.p_name.value;
-  var p_price = event.target.elements.p_price.value;
-  var newProduct = {
-    name: p_name,
-    price: p_price
-  };
-  products.push(newProduct);
-  event.target.elements.p_name.value = "";
-  event.target.elements.p_price.value = "";
-  renderApp();
-}
-function renderApp() {
-  var template = /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", {
-    id: "header"
-  }, "\xDCr\xFCn Listesi"), /*#__PURE__*/React.createElement("h3", null, "Se\xE7ilen \xDCr\xFCn Say\u0131s\u0131: ", selectedProducts.length), /*#__PURE__*/React.createElement("form", {
-    onSubmit: saveProduct
-  }, /*#__PURE__*/React.createElement("input", {
-    type: "text",
-    name: "p_name",
-    id: "p_name"
-  }), /*#__PURE__*/React.createElement("input", {
-    type: "text",
-    name: "p_price",
-    id: "p_price"
-  }), /*#__PURE__*/React.createElement("button", {
-    type: "submit"
-  }, "Save Product")), products.map(function (product, index) {
-    return /*#__PURE__*/React.createElement("div", {
-      className: "product-details",
-      key: index
-    }, /*#__PURE__*/React.createElement("h2", null, product.name), product.price, /*#__PURE__*/React.createElement("button", {
-      type: "button",
-      id: index,
-      onClick: function onClick(event) {
-        selectProduct(event, product.name);
-      }
-    }, "Ekle"));
-  }));
-  root.render(template);
-}
+  _createClass(TodoApp, [{
+    key: "render",
+    value: function render() {
+      var data = {
+        başlik: "Todo Uygulaması",
+        aciklama: "Görev tamamlandı",
+        görevler: ["Görev 1", "Görev 2", "Görev 3"]
+      };
+      return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Header, {
+        title: data.başlik,
+        description: data.aciklama
+      }), /*#__PURE__*/React.createElement(TodoList, {
+        items: data.görevler
+      }), /*#__PURE__*/React.createElement(NewItem, null));
+    }
+  }]);
+  return TodoApp;
+}(React.Component);
+var Header = /*#__PURE__*/function (_React$Component2) {
+  _inherits(Header, _React$Component2);
+  var _super2 = _createSuper(Header);
+  function Header() {
+    _classCallCheck(this, Header);
+    return _super2.apply(this, arguments);
+  }
+  _createClass(Header, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, this.props.title), /*#__PURE__*/React.createElement("p", null, this.props.description));
+    }
+  }]);
+  return Header;
+}(React.Component);
 ;
-renderApp();
-
-// Day 2 Finished **********************************************
-// Day 3 Started ***********************************************
+var TodoList = /*#__PURE__*/function (_React$Component3) {
+  _inherits(TodoList, _React$Component3);
+  var _super3 = _createSuper(TodoList);
+  function TodoList(props) {
+    var _this;
+    _classCallCheck(this, TodoList);
+    _this = _super3.call(this, props);
+    _this.clearItems = _this.clearItems.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+  _createClass(TodoList, [{
+    key: "clearItems",
+    value: function clearItems() {
+      console.log("clear items");
+      console.log(this.props.items);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("ul", null, this.props.items.map(function (görev, index) {
+        return /*#__PURE__*/React.createElement(Todoİtem, {
+          key: index,
+          item: görev
+        });
+      })), /*#__PURE__*/React.createElement("button", {
+        onClick: this.clearItems
+      }, "Temizle"));
+    }
+  }]);
+  return TodoList;
+}(React.Component);
+;
+var NewItem = /*#__PURE__*/function (_React$Component4) {
+  _inherits(NewItem, _React$Component4);
+  var _super4 = _createSuper(NewItem);
+  function NewItem() {
+    _classCallCheck(this, NewItem);
+    return _super4.apply(this, arguments);
+  }
+  _createClass(NewItem, [{
+    key: "onFormSubmit",
+    value: function onFormSubmit(e) {
+      e.preventDefault();
+      var item = e.target.elements.txtItem.value;
+      if (item) {
+        console.log(item);
+        e.target.elements.value = "";
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React.createElement("form", {
+        onSubmit: this.onFormSubmit
+      }, /*#__PURE__*/React.createElement("input", {
+        type: "text",
+        name: "txtItem"
+      }), /*#__PURE__*/React.createElement("button", {
+        type: "submit"
+      }, "Ekle"));
+    }
+  }]);
+  return NewItem;
+}(React.Component);
+var Todoİtem = /*#__PURE__*/function (_React$Component5) {
+  _inherits(Todoİtem, _React$Component5);
+  var _super5 = _createSuper(Todoİtem);
+  function Todoİtem() {
+    _classCallCheck(this, Todoİtem);
+    return _super5.apply(this, arguments);
+  }
+  _createClass(Todoİtem, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React.createElement("li", null, this.props.item);
+    }
+  }]);
+  return Todoİtem;
+}(React.Component);
+root.render( /*#__PURE__*/React.createElement(TodoApp, null));
+// Day 3 Finished ****************************
