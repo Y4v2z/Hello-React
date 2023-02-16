@@ -192,28 +192,136 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 // root.render(<TodoApp />);
 
 // Class Kullanımı
+// var root = ReactDOM.createRoot(document.getElementById("root"));
+// class TodoApp extends React.Component {
+//     render() {
+//         const data = {
+//             başlik: "Todo Uygulaması",
+//             aciklama: "Görev tamamlandı",
+//             görevler: ["Görev 1", "Görev 2", "Görev 3"]
+//         }
+//         return (
+//             <div>
+//                 <Header title={data.başlik} description={data.aciklama} />
+//                 <TodoList items={data.görevler} />
+//                 <NewItem />
+
+//             </div>)
+//     }
+// }
+// class Header extends React.Component {
+//     render() {
+//         return (
+//             <div>
+//                 <h1>{this.props.title}</h1>
+//                 <p>{this.props.description}</p>
+//             </div>
+//         )
+//     }
+// };
+// class TodoList extends React.Component {
+//     constructor(props) {
+//         super(props);
+//         this.clearItems = this.clearItems.bind(this);
+//     }
+//     clearItems() {
+//         console.log("clear items");
+//         console.log(this.props.items);
+//     }
+//     render() {
+//         return (
+//             <div>
+
+//                 <ul>
+//                     {this.props.items.map((görev, index) => < Todoİtem key={index} item={görev} />)}
+//                 </ul>
+//                 <button onClick={this.clearItems} >Temizle</button>
+//             </div>
+//         )
+//     };
+// };
+// class NewItem extends React.Component {
+//     onFormSubmit(e) {
+//         e.preventDefault()
+//         const item = e.target.elements.txtItem.value;
+//         if (item) {
+//             console.log(item);
+//             e.target.elements.value = "";
+//         }
+//     }
+//     render() {
+//         return (
+//             <form onSubmit={this.onFormSubmit}>
+//                 <input type="text" name="txtItem" />
+//                 <button type="submit">Ekle</button>
+//             </form>
+//         );
+//     }
+// }
+// class Todoİtem extends React.Component {
+//     render() {
+//         return (
+//             <li>{this.props.item}</li>
+//         )
+//     }
+// }
+// root.render(<TodoApp />);
+// Day 3 Finished *******************************
+
+// Day 4 Started *******************************
+
+// COMPONENT STATE UYGULAMASİ
+
 var root = ReactDOM.createRoot(document.getElementById("root"));
 var TodoApp = /*#__PURE__*/function (_React$Component) {
   _inherits(TodoApp, _React$Component);
   var _super = _createSuper(TodoApp);
-  function TodoApp() {
+  function TodoApp(props) {
+    var _this;
     _classCallCheck(this, TodoApp);
-    return _super.apply(this, arguments);
+    _this = _super.call(this, props);
+    _this.clearItems = _this.clearItems.bind(_assertThisInitialized(_this));
+    _this.addItem = _this.addItem.bind(_assertThisInitialized(_this));
+    _this.state = {
+      görevler: ["Görev 1", "Görev 2", "Görev 3"]
+    };
+    return _this;
   }
   _createClass(TodoApp, [{
+    key: "clearItems",
+    value: function clearItems() {
+      this.setState({
+        görevler: []
+      });
+    }
+  }, {
+    key: "addItem",
+    value: function addItem(item) {
+      if (this.state.görevler.indexOf(item) > -1) {
+        return "aynı elemanı ekleyemezsiniz.";
+      }
+      this.setState(function (prevState) {
+        return {
+          görevler: prevState.görevler.concat(item)
+        };
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var data = {
         başlik: "Todo Uygulaması",
-        aciklama: "Görev tamamlandı",
-        görevler: ["Görev 1", "Görev 2", "Görev 3"]
+        aciklama: "Görev tamamlandı"
       };
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Header, {
         title: data.başlik,
         description: data.aciklama
       }), /*#__PURE__*/React.createElement(TodoList, {
-        items: data.görevler
-      }), /*#__PURE__*/React.createElement(NewItem, null));
+        items: this.state.görevler,
+        clear: this.clearItems
+      }), /*#__PURE__*/React.createElement(NewItem, {
+        addItem: this.addItem
+      }));
     }
   }]);
   return TodoApp;
@@ -237,20 +345,11 @@ var Header = /*#__PURE__*/function (_React$Component2) {
 var TodoList = /*#__PURE__*/function (_React$Component3) {
   _inherits(TodoList, _React$Component3);
   var _super3 = _createSuper(TodoList);
-  function TodoList(props) {
-    var _this;
+  function TodoList() {
     _classCallCheck(this, TodoList);
-    _this = _super3.call(this, props);
-    _this.clearItems = _this.clearItems.bind(_assertThisInitialized(_this));
-    return _this;
+    return _super3.apply(this, arguments);
   }
   _createClass(TodoList, [{
-    key: "clearItems",
-    value: function clearItems() {
-      console.log("clear items");
-      console.log(this.props.items);
-    }
-  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("ul", null, this.props.items.map(function (görev, index) {
@@ -259,7 +358,7 @@ var TodoList = /*#__PURE__*/function (_React$Component3) {
           item: görev
         });
       })), /*#__PURE__*/React.createElement("button", {
-        onClick: this.clearItems
+        onClick: this.props.clear
       }, "Temizle"));
     }
   }]);
@@ -269,9 +368,15 @@ var TodoList = /*#__PURE__*/function (_React$Component3) {
 var NewItem = /*#__PURE__*/function (_React$Component4) {
   _inherits(NewItem, _React$Component4);
   var _super4 = _createSuper(NewItem);
-  function NewItem() {
+  function NewItem(props) {
+    var _this2;
     _classCallCheck(this, NewItem);
-    return _super4.apply(this, arguments);
+    _this2 = _super4.call(this, props);
+    _this2.onFormSubmit = _this2.onFormSubmit.bind(_assertThisInitialized(_this2));
+    _this2.state = {
+      error: ""
+    };
+    return _this2;
   }
   _createClass(NewItem, [{
     key: "onFormSubmit",
@@ -279,21 +384,24 @@ var NewItem = /*#__PURE__*/function (_React$Component4) {
       e.preventDefault();
       var item = e.target.elements.txtItem.value;
       if (item) {
-        console.log(item);
         e.target.elements.value = "";
+        var error = this.props.addItem(item);
+        this.setState({
+          error: error
+        });
       }
     }
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement("form", {
+      return /*#__PURE__*/React.createElement("div", null, this.state.error && /*#__PURE__*/React.createElement("p", null, this.state.error), /*#__PURE__*/React.createElement("form", {
         onSubmit: this.onFormSubmit
       }, /*#__PURE__*/React.createElement("input", {
         type: "text",
         name: "txtItem"
       }), /*#__PURE__*/React.createElement("button", {
         type: "submit"
-      }, "Ekle"));
+      }, "Ekle")));
     }
   }]);
   return NewItem;
@@ -314,4 +422,7 @@ var Todoİtem = /*#__PURE__*/function (_React$Component5) {
   return Todoİtem;
 }(React.Component);
 root.render( /*#__PURE__*/React.createElement(TodoApp, null));
-// Day 3 Finished ****************************
+
+// Day 4 Finished *******************************
+
+// Day 5 Started *******************************
