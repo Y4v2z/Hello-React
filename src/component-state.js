@@ -13,16 +13,15 @@ class User extends React.Component {
         this.setState({
             name: "Esra Avci",
             email: "esraavci01@gmail.com"
-        })
-        console.log(this.state);
-
+        });
     }
+
     render() {
         return (
             <div>
-                <h2>{this.state.name}</h2>
+                <h1>{this.state.name}</h1>
                 <p>{this.state.email}</p>
-                <button onClick={this.changeEmail}>Change Email</button>
+                <button onClick={this.changeEmail} >Change Email</button>
             </div>
 
         )
