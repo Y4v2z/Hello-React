@@ -23,16 +23,21 @@ class App extends React.Component {
                     name: "Iphone 17",
                     price: 70000,
                     image: "3.jpg"
-                }
+                },
             ],
             selectedProducts: [
                 {
-                    name: "Iphone 17",
-                    price: 70000,
-                    image: "3.jpg"
+                    count: 1,
+                    product: {
+                        name: "Iphone 17",
+                        price: 70000,
+                        image: "3.jpg"
+                    }
+
                 }
 
             ]
+
         }
     }
     componentDidMount() {
@@ -68,10 +73,11 @@ class App extends React.Component {
                         <NewProduct saveProduct={this.saveProduct} />
                     </div>
                     <div className="col-4">
-                        <ProductList products={this.state.products} selectProduct={this.saveProduct} />
+                        <ProductList products={this.state.products} selectProduct={this.selectProduct} />
                     </div>
-                    <div className="col-4"></div>
-                    <SelectedProductList products={this.state.selectedProducts} />
+                    <div className="col-4">
+                        <SelectedProductList products={this.state.selectedProducts} />
+                    </div>
                 </div>
             </div>
         )
